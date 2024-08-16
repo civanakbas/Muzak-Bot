@@ -1,0 +1,9 @@
+services:
+  muzak-bot:
+    build: .
+    container_name: muzak-bot
+    volumes:
+      - .:/muzak
+    environment:
+      - M_DISCORD_TOKEN=${M_DISCORD_TOKEN}
+    command: python muzak/main.py

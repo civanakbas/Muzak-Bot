@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "muzak"
+version = "0.1.0"
+description = ""
+authors = ["Civan Akbas <civannakbas@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+discord = "^2.3.2"
+ffmpeg = "^1.4"
+pynacl = "^1.5.0"
+yt-dlp = "^2024.8.6"
+pydantic = "^2.8.2"
+ruff = "^0.6.0"
+pydantic-settings = "^2.4.0"
+
+[tool.ruff]
+line-length = 100
+lint.select = ["E", "F", "I", "W", "C90"]
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

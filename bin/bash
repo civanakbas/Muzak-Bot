@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -ex
+
+
+cd $(dirname $0)/..
+
+docker compose build muzak-bot
+
+docker compose run --rm muzak-bot bash
