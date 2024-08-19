@@ -82,3 +82,12 @@ class GeneralCog(commands.Cog):
         except discord.DiscordException as e:
             await ctx.send("Failed to leave the voice channel.")
             logger.error(f"Failed to leave voice channel: {e}")
+
+async def setup(bot: commands.Bot):
+    """Function to load this cog.
+    Args:
+        bot: The bot instance to load the cog into.
+    """
+    logger.info("Loading General Cog")
+    await bot.add_cog(GeneralCog(bot))
+    logger.info("General Cog Loaded!")

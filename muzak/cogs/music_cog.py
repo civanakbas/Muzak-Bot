@@ -168,3 +168,12 @@ class MusicCog(commands.Cog):
             )
             await ctx.send(embed=embed)
             logger.info("No song is currently playing")
+
+async def setup(bot: commands.Bot):
+    """Function to load this cog.
+    Args:
+        bot: The bot instance to load the cog into.
+    """
+    logger.info("Loading General Cog")
+    await bot.add_cog(MusicCog(bot))
+    logger.info("General Cog Loaded!")
