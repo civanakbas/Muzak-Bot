@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -ex
+
+cd $(dirname $0)/..
+
+docker compose up --build 
+
+minikube image load muzak-bot:latest 
+
+kubectl create secret generic muzak-bot-secret --from-literal=M_DISCORD_TOKEN=${M_DISCORD_TOKEN} --dry-run=client -o yaml | kubectl apply -f -
+
+kubectl apply -f deployment.yaml
+

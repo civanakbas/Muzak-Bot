@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: muzak-bot-deployment
+  labels:
+    app: muzak-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: muzak-bot
+  template:
+    metadata:
+      labels:
+        app: muzak-bot
+    spec:
+      containers:
+      - name: muzak-bot
+        image: muzak-bot:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: M_DISCORD_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: muzak-bot-secret
+              key: M_DISCORD_TOKEN
+        volumeMounts:
+        - name: muzak-volume
+          mountPath: /muzak
+      volumes:
+      - name: muzak-volume
+        hostPath:
+          path: . 
+          type: Directory
+      restartPolicy: Always 

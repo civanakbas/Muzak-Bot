@@ -44,18 +44,10 @@ class GeneralCog(commands.Cog):
         if channel:
             try:
                 await channel.connect()
-                embed = embed_utils.join_channel_embed(
-                    channel.name,
-                    ctx.author.display_name,
-                    embed_utils.get_avatar_url(ctx.author)
-                )
-                await ctx.send(embed=embed)
                 logger.info(f"Joined voice channel: {channel.name}")
             except discord.DiscordException as e:
-                await ctx.send("Failed to join the voice channel.")
                 logger.error(f"Failed to join voice channel: {e}")
         else:
-            await ctx.send("You are not connected to a voice channel.")
             logger.warning("Join command invoked but user is not in a voice channel.")
 
     @commands.command(name="leave", help="Leave the channel.")
@@ -72,15 +64,8 @@ class GeneralCog(commands.Cog):
             logger.warning("Leave command invoked but bot is not in a voice channel.")
         try:
             await voice_channel.disconnect()
-            embed = embed_utils.leave_channel_embed(
-                voice_channel.channel.name,
-                ctx.author.display_name,
-                embed_utils.get_avatar_url(ctx.author)
-            )
-            await ctx.send(embed=embed)
             logger.info(f"Left the voice channel: {voice_channel.channel.name}")
         except discord.DiscordException as e:
-            await ctx.send("Failed to leave the voice channel.")
             logger.error(f"Failed to leave voice channel: {e}")
 
 async def setup(bot: commands.Bot):

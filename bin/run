@@ -7,4 +7,4 @@ cd $(dirname $0)/..
 
 docker compose build muzak-bot
 
-docker compose run --rm muzak-bot
+docker compose run -d --rm muzak-bot
