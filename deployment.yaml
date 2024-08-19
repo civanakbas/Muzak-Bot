@@ -24,12 +24,4 @@ spec:
             secretKeyRef:
               name: muzak-bot-secret
               key: M_DISCORD_TOKEN
-        volumeMounts:
-        - name: muzak-volume
-          mountPath: /muzak
-      volumes:
-      - name: muzak-volume
-        hostPath:
-          path: . 
-          type: Directory
       restartPolicy: Always 
