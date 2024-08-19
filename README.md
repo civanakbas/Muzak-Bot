@@ -10,9 +10,9 @@ A very simplistic Discord bot for playing music from YouTube.
 - A Discord bot token
 
 ### Running the Bot with Docker
-    ```bash
-    ./bin/run
-    ```
+```bash
+./bin/run
+```
 
 ### Environment Variables
 
