@@ -9,8 +9,11 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 
 ENV PATH="/root/.local/bin:$PATH"
 
-COPY . /muzak
+COPY pyproject.toml poetry.lock ./
 
 RUN poetry config virtualenvs.create false \
-    && poetry install 
+    && poetry install --no-root
 
+COPY . .
+
+RUN poetry install

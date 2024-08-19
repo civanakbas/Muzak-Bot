@@ -10,7 +10,7 @@ ytdl_format_options = {
 }
 
 ffmpeg_options = {
-    'options': '-vn'
+    'options': '-vn -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5'
 }
 
 ytdl = yt_dlp.YoutubeDL(ytdl_format_options)
@@ -35,13 +35,14 @@ class AudioPlayer(discord.PCMVolumeTransformer):
         self.url = data.get('url')
 
     @classmethod
-    async def create_from_url(cls, url, *, loop=None, stream=True):
+    async def create_from_url(cls, url, *, loop=None, stream=True, start_time=0):
         """Creates an AudioPlayer instance from a YouTube URL.
 
         Args:
             url: The YouTube video URL.
             loop: The asyncio event loop (optional).
             stream: Whether to stream or download the video (default is True).
+            start_time: The start time in seconds to seek to in the video (default is 0).
 
         Returns:
             AudioPlayer: An instance of AudioPlayer.
@@ -54,5 +55,9 @@ class AudioPlayer(discord.PCMVolumeTransformer):
 
         filename = data['url'] if stream else ytdl.prepare_filename(data)
 
-        logger.info(f"Audio file created from URL: {url}")
-        return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
+        ffmpeg_opts = ffmpeg_options.copy()
+        if start_time > 0:
+            ffmpeg_opts['options'] += f' -ss {start_time}'
+
+        logger.info(f"Audio file created from URL: {url}, starting at {start_time} seconds.")
+        return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_opts), data=data)
